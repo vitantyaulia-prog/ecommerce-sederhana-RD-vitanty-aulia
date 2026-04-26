@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Pertamaku</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap');
+
+        body {
+            margin: 0;
+            font-family: 'DM Sans', Arial, sans-serif;
+            text-align: center;
+            min-height: 100vh;
+            background: #faf6f1;
+            color: #2c1810;
+            position: relative;
+            overflow-x: hidden;
+            padding-bottom: 60px;
+        }
+
+        /* Dekorasi background dengan pseudo-element (tanpa ubah HTML) */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -15%;
+            right: -8%;
+            width: 520px;
+            height: 520px;
+            background: radial-gradient(circle, rgba(196, 93, 44, 0.13), transparent 70%);
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+            pointer-events: none;
+            animation: blobFloat 22s ease-in-out infinite;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -10%;
+            left: -8%;
+            width: 440px;
+            height: 440px;
+            background: radial-gradient(circle, rgba(122, 158, 126, 0.15), transparent 70%);
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+            pointer-events: none;
+            animation: blobFloat 22s ease-in-out infinite -8s;
+        }
+
+        @keyframes blobFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(25px, -18px) scale(1.04); }
+            50% { transform: translate(-18px, 25px) scale(0.96); }
+            75% { transform: translate(12px, 12px) scale(1.02); }
+        }
+
+        /* Header */
+        header {
+            background: rgba(250, 246, 241, 0.78);
+            backdrop-filter: blur(20px) saturate(1.4);
+            -webkit-backdrop-filter: blur(20px) saturate(1.4);
+            border-bottom: 1px solid rgba(196, 93, 44, 0.1);
+            padding: 22px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        header h2 {
+            margin: 0 0 12px 0;
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: #2c1810;
+            letter-spacing: -0.02em;
+        }
+
+        nav a {
+            color: #5a3e2b;
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 7px 18px;
+            border-radius: 999px;
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        nav a:hover {
+            text-decoration: none;
+            color: #c45d2c;
+            background: rgba(196, 93, 44, 0.08);
+        }
+
+        /* Heading utama */
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            color: #2c1810;
+            margin-top: 90px;
+            letter-spacing: -0.03em;
+            line-height: 1.25;
+            position: relative;
+            z-index: 1;
+            padding: 0 20px;
+        }
+
+        /* Garis dekoratif di bawah h1 */
+        h1::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #c45d2c, #e8743a);
+            border-radius: 999px;
+            margin: 20px auto 0;
+        }
+
+        .btn-produk {
+            background: linear-gradient(135deg, #c45d2c, #e8743a);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'DM Sans', Arial, sans-serif;
+            margin-top: 28px;
+            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+            box-shadow: 0 8px 36px rgba(196, 93, 44, 0.22);
+            position: relative;
+            z-index: 1;
+            letter-spacing: 0.01em;
+        }
+
+        .btn-produk:hover {
+            background: linear-gradient(135deg, #e8743a, #d4683a);
+            transform: translateY(-3px) scale(1.04);
+            box-shadow: 0 14px 48px rgba(196, 93, 44, 0.35);
+        }
+
+        /* Animasi halaman — dipertahankan, sedikit diperkaya */
+        body {
+            opacity: 0;
+            animation: fadeIn 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .fade-out {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(250, 246, 241, 0.82);
+            backdrop-filter: blur(20px) saturate(1.4);
+            -webkit-backdrop-filter: blur(20px) saturate(1.4);
+            border-top: 1px solid rgba(196, 93, 44, 0.1);
+            color: #9c8272;
+            text-align: center;
+            padding: 14px 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 0.84rem;
+            font-weight: 500;
+            z-index: 10;
+        }
+
+        /* ====================================================
+           TAMBAHAN: SELURUH AESTHETIC & ANIMASI DI BAWAH INI
+           ==================================================== */
+
+        /* Overlay lembut biar tulisan tetap jelas di atas gambar */
+        .soft-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(ellipse 60% 50% at 50% 36%, rgba(250, 246, 241, 0.58), transparent),
+                linear-gradient(180deg, rgba(250, 246, 241, 0.3) 0%, rgba(250, 246, 241, 0.5) 100%);
+        }
+
+        /* Blob pink tambahan buat nuansa hangat feminin */
+        .blob-warm {
+            position: fixed;
+            top: 38%;
+            left: 50%;
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(219, 150, 150, 0.1), transparent 70%);
+            border-radius: 50%;
+            filter: blur(65px);
+            z-index: 0;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            animation: blobFloat 28s ease-in-out infinite -5s;
+        }
+
+        /* --- GAMBAR DIMSUM ANIMASI MELAYANG --- */
+        .dimsum-fly {
+            position: fixed;
+            z-index: 0;
+            pointer-events: none;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(44, 24, 16, 0.07);
+            opacity: 0;
+        }
+
+        .dimsum-fly img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Label nama menu di bawah gambar */
+        .dimsum-fly .tag {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 18px 8px 6px;
+            background: linear-gradient(to top, rgba(44, 24, 16, 0.52), transparent);
+            color: rgba(250, 246, 241, 0.88);
+            font-size: 0.58rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+        }
+
+        /* Dimsum mentai — kanan, paling besar */
+        .dimsum-fly.mentai {
+            top: 20%;
+            right: -18px;
+            width: clamp(115px, 19vw, 250px);
+            height: clamp(145px, 24vw, 315px);
+            border-radius: 24px;
+            filter: saturate(0.82) brightness(1.04);
+            animation:
+                muncul 1.4s ease 0.4s forwards,
+                terbang1 9s ease-in-out 1.8s infinite;
+        }
+
+        /* Dimsum goreng keju — kiri atas */
+        .dimsum-fly.keju {
+            top: 13%;
+            left: 6%;
+            width: clamp(80px, 12vw, 150px);
+            height: clamp(100px, 15vw, 190px);
+            border-radius: 18px;
+            filter: saturate(0.85) brightness(1.05);
+            animation:
+                muncul 1.4s ease 0.7s forwards,
+                terbang2 10s ease-in-out 2.1s infinite;
+        }
+
+        /* Dimsum original — kiri bawah */
+        .dimsum-fly.original {
+            bottom: 20%;
+            left: -14px;
+            width: clamp(95px, 15vw, 200px);
+            height: clamp(120px, 19vw, 250px);
+            border-radius: 22px;
+            filter: saturate(0.72) brightness(1.06);
+            animation:
+                muncul 1.4s ease 1s forwards,
+                terbang3 11s ease-in-out 2.4s infinite;
+        }
+
+        /* Tahu bakso toping — kanan bawah */
+        .dimsum-fly.tahu {
+            bottom: 16%;
+            right: 4%;
+            width: clamp(70px, 11vw, 150px);
+            height: clamp(90px, 14vw, 190px);
+            border-radius: 18px;
+            filter: saturate(0.72) brightness(1.06);
+            animation:
+                muncul 1.4s ease 1.3s forwards,
+                terbang4 8s ease-in-out 2.7s infinite;
+        }
+
+        /* Animasi muncul pertama kali */
+        @keyframes muncul {
+            from { opacity: 0; transform: translateY(28px) scale(0.93); }
+            to   { opacity: 0.2; transform: translateY(0) scale(1); }
+        }
+
+        /* 4 animasi terbang beda节奏 supaya terlihat alami */
+        @keyframes terbang1 {
+            0%, 100% { transform: translateY(0)    rotate(3deg)  scale(1);    }
+            25%      { transform: translateY(-14px) rotate(1deg)  scale(1.02); }
+            50%      { transform: translateY(5px)   rotate(4deg)  scale(0.98); }
+            75%      { transform: translateY(-8px)  rotate(2deg)  scale(1.01); }
+        }
+
+        @keyframes terbang2 {
+            0%, 100% { transform: translateY(0)    rotate(-6deg) scale(1);    }
+            30%      { transform: translateY(-10px) rotate(-4deg) scale(1.03); }
+            60%      { transform: translateY(7px)   rotate(-8deg) scale(0.97); }
+            85%      { transform: translateY(-5px)  rotate(-5deg) scale(1.01); }
+        }
+
+        @keyframes terbang3 {
+            0%, 100% { transform: translateY(0)    rotate(5deg)  scale(1);    }
+            20%      { transform: translateY(7px)   rotate(3deg)  scale(0.98); }
+            50%      { transform: translateY(-12px) rotate(7deg)  scale(1.03); }
+            80%      { transform: translateY(3px)   rotate(4deg)  scale(0.99); }
+        }
+
+        @keyframes terbang4 {
+            0%, 100% { transform: translateY(0)    rotate(-4deg) scale(1);    }
+            35%      { transform: translateY(-15px) rotate(-2deg) scale(1.02); }
+            65%      { transform: translateY(4px)   rotate(-6deg) scale(0.97); }
+            85%      { transform: translateY(-6px)  rotate(-3deg) scale(1.01); }
+        }
+
+        /* Hiasan kecil melayang — bintang & hati */
+        .sparkle {
+            position: fixed;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .sparkle.s1 { top: 17%; right: 20%; animation: kelip 6s ease-in-out infinite; }
+        .sparkle.s2 { bottom: 28%; left: 16%;  animation: kelip 7s ease-in-out 1.5s infinite; }
+        .sparkle.s3 { top: 34%; left: 3%;     animation: kelip 8s ease-in-out 2.5s infinite; }
+        .sparkle.s4 { bottom: 20%; right: 16%; animation: kelip 5.5s ease-in-out 3.5s infinite; }
+
+        @keyframes kelip {
+            0%, 100% { opacity: 0.1; transform: translateY(0) rotate(0deg); }
+            25%      { opacity: 0.22; transform: translateY(-9px) rotate(5deg); }
+            50%      { opacity: 0.08; transform: translateY(4px) rotate(-3deg); }
+            75%      { opacity: 0.18; transform: translateY(-5px) rotate(2deg); }
+        }
+
+        /* --- Deskripsi di bawah h1 --- */
+        .hero-desc {
+            position: relative;
+            z-index: 1;
+            color: #9c8272;
+            font-size: clamp(0.86rem, 2vw, 1rem);
+            max-width: 420px;
+            margin: 18px auto 0;
+            line-height: 1.75;
+            padding: 0 24px;
+            opacity: 0;
+            animation: fadeIn 0.8s ease 0.5s forwards;
+        }
+
+        .hero-desc::after {
+            content: '';
+            display: block;
+            width: 28px;
+            height: 1.5px;
+            background: rgba(156, 130, 114, 0.25);
+            border-radius: 999px;
+            margin: 18px auto 0;
+        }
+
+        /* ========================================
+           RESPONSIVE: HP (max-width 600px)
+           ======================================== */
+        @media (max-width: 600px) {
+            header { padding: 14px 14px; }
+
+            header h2 {
+                font-size: 1.1rem;
+                margin-bottom: 7px;
+            }
+
+            nav a {
+                font-size: 0.74rem;
+                margin: 0 2px;
+                padding: 5px 10px;
+            }
+
+            h1 {
+                margin-top: 44px;
+                padding: 0 14px;
+            }
+
+            .btn-produk {
+                padding: 12px 28px;
+                font-size: 0.88rem;
+                margin-top: 22px;
+            }
+
+            .hero-desc {
+                padding: 0 18px;
+                font-size: 0.82rem;
+            }
+
+            /* Gambar HP: lebih kecil, lebih samar, animasi pelan */
+            .dimsum-fly.mentai {
+                right: -38px;
+                width: clamp(85px, 24vw, 125px);
+                height: clamp(108px, 30vw, 158px);
+                animation:
+                    munculHP 1.1s ease 0.4s forwards,
+                    fly1hp 13s ease-in-out 1.5s infinite;
+            }
+            .dimsum-fly.keju {
+                left: 1%;
+                width: clamp(55px, 17vw, 80px);
+                height: clamp(70px, 21vw, 100px);
+                animation:
+                    munculHP 1.1s ease 0.7s forwards,
+                    fly2hp 15s ease-in-out 1.8s infinite;
+            }
+            .dimsum-fly.original {
+                left: -28px;
+                width: clamp(70px, 21vw, 105px);
+                height: clamp(88px, 26vw, 132px);
+                animation:
+                    munculHP 1.1s ease 1s forwards,
+                    fly3hp 16s ease-in-out 2.1s infinite;
+            }
+            .dimsum-fly.tahu {
+                right: 1%;
+                width: clamp(48px, 14vw, 70px);
+                height: clamp(60px, 17vw, 88px);
+                animation:
+                    munculHP 1.1s ease 1.3s forwards,
+                    fly4hp 12s ease-in-out 2.4s infinite;
+            }
+
+            @keyframes munculHP {
+                from { opacity: 0; transform: translateY(18px) scale(0.95); }
+                to   { opacity: 0.13; transform: translateY(0) scale(1); }
+            }
+
+            @keyframes fly1hp {
+                0%, 100% { transform: translateY(0) rotate(3deg); }
+                50%      { transform: translateY(-7px) rotate(1deg); }
+            }
+            @keyframes fly2hp {
+                0%, 100% { transform: translateY(0) rotate(-6deg); }
+                50%      { transform: translateY(-6px) rotate(-4deg); }
+            }
+            @keyframes fly3hp {
+                0%, 100% { transform: translateY(0) rotate(5deg); }
+                50%      { transform: translateY(-6px) rotate(7deg); }
+            }
+            @keyframes fly4hp {
+                0%, 100% { transform: translateY(0) rotate(-4deg); }
+                50%      { transform: translateY(-8px) rotate(-2deg); }
+            }
+
+            .dimsum-fly .tag { font-size: 0.48rem; padding: 12px 5px 4px; }
+            .sparkle { display: none; }
+            .blob-warm { width: 180px; height: 180px; }
+
+            footer { font-size: 0.72rem; padding: 10px 6px; }
+        }
+
+        /* ========================================
+           RESPONSIVE: TABLET (601px - 1024px)
+           ======================================== */
+        @media (min-width: 601px) and (max-width: 1024px) {
+            header h2 { font-size: 1.32rem; }
+
+            nav a {
+                font-size: 0.84rem;
+                margin: 0 6px;
+                padding: 6px 14px;
+            }
+
+            h1 { margin-top: 66px; }
+
+            .dimsum-fly.mentai {
+                right: -10px;
+                width: clamp(105px, 17vw, 185px);
+                height: clamp(132px, 21vw, 234px);
+            }
+            .dimsum-fly.keju {
+                width: clamp(72px, 11vw, 115px);
+                height: clamp(90px, 14vw, 145px);
+            }
+            .dimsum-fly.original {
+                left: -10px;
+                width: clamp(82px, 13vw, 155px);
+                height: clamp(102px, 16vw, 194px);
+            }
+            .dimsum-fly.tahu {
+                width: clamp(60px, 9vw, 115px);
+                height: clamp(76px, 12vw, 145px);
+            }
+        }
+
+        /* ========================================
+           RESPONSIVE: LAPTOP (1025px ke atas)
+           ======================================== */
+        @media (min-width: 1025px) {
+            header { padding: 22px 40px; }
+
+            nav a {
+                font-size: 0.95rem;
+                margin: 0 14px;
+                padding: 8px 22px;
+            }
+
+            h1 { margin-top: 100px; }
+
+            .dimsum-fly.mentai   { right: 38px; }
+            .dimsum-fly.keju     { left: 8%; }
+            .dimsum-fly.original { left: 26px; }
+            .dimsum-fly.tahu     { right: 8%; }
+
+            .blob-warm { width: 400px; height: 400px; }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .dimsum-fly, .sparkle, .hero-desc {
+                animation: none !important;
+                opacity: 1 !important;
+            }
+            .dimsum-fly { opacity: 0.18 !important; }
+            .sparkle { opacity: 0.12 !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TAMBAHAN: Dekorasi & Animasi Gambar ===== -->
+    <div class="soft-overlay" aria-hidden="true"></div>
+    <div class="blob-warm" aria-hidden="true"></div>
+
+    <!-- Dimsum mentai — kanan besar -->
+    <div class="dimsum-fly mentai" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1569058242567-93de6f36f8eb?w=480&h=620&fit=crop&q=80" alt="">
+        <span class="tag">dimsum mentai</span>
+    </div>
+
+    <!-- Dimsum goreng keju — kiri atas -->
+    <div class="dimsum-fly keju" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=320&h=400&fit=crop&q=80" alt="">
+        <span class="tag">goreng keju</span>
+    </div>
+
+    <!-- Dimsum original — kiri bawah -->
+    <div class="dimsum-fly original" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?w=400&h=500&fit=crop&q=80" alt="">
+        <span class="tag">dimsum original</span>
+    </div>
+
+    <!-- Tahu bakso toping — kanan bawah -->
+    <div class="dimsum-fly tahu" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1582169296194-e4d644c48063?w=320&h=400&fit=crop&q=80" alt="">
+        <span class="tag">tahu bakso toping</span>
+    </div>
+
+    <!-- Hiasan kecil bintang & hati -->
+    <div class="sparkle s1" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c45d2c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+    <div class="sparkle s2" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#dba89a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+    <div class="sparkle s3" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c4968a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+    <div class="sparkle s4" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#dba89a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+    <!-- ===== AKHIR TAMBAHAN ===== -->
+
+    <!-- Header -->
+    <header>
+        <h2>✨Toko Dapur Aulisious ✨</h2>
+        <nav>
+            <a href="index.html">Beranda</a>
+            <a href="produk.html">Produk</a>
+            <a href="kategori.html">Kategori</a>
+            <a href="keranjang.html">Keranjang</a>
+        </nav>
+    </header>
+
+    <h1>Selamat Datang di Dapur Aulisious</h1>
+
+    <!-- ===== TAMBAHAN: Deskripsi ===== -->
+    <p class="hero-desc">Cemilan simpel yang pas buat kapan aja — ada dimsum goreng keju, dimsum mentai, dimsum original, sama tahu bakso toping. Dibuat segar, langsung bisa pesan.</p>
+    <!-- ===== AKHIR TAMBAHAN ===== -->
+
+<button onclick="pindahHalaman('produk.html')" class="btn-produk">
+    Lihat Produk
+</button>
+
+    <footer>
+        <p>copyright by vitanty aulia</p>
+    </footer>
+<script>
+function pindahHalaman(url) {
+    document.body.classList.add("fade-out");
+    setTimeout(function() {
+        window.location.href = url;
+    }, 500);
+}
+</script>
+</body>
+</html>
