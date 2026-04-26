@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keranjang Belanja</title>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+    /* ===== Scrollbar ===== */
+    ::-webkit-scrollbar { width: 7px; }
+    ::-webkit-scrollbar-track { background: #faf6f1; }
+    ::-webkit-scrollbar-thumb { background: rgba(196, 93, 44, 0.18); border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(196, 93, 44, 0.32); }
+
+    /* ===== Selection ===== */
+    ::selection { background: rgba(196, 93, 44, 0.16); color: #2c1810; }
+
+    body {
+        font-family: 'DM Sans', Arial, sans-serif;
+        margin: 0;
+        text-align: center;
+        background: #faf6f1;
+        color: #2c1810;
+        min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+        padding-bottom: 60px;
+        opacity: 0;
+        animation: pageIn 1s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        background-size: 200px;
+        background-color: #faf6f1;
+    }
+
+    @keyframes pageIn {
+        from { opacity: 0; transform: translateY(18px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-out {
+        opacity: 0 !important;
+        transition: opacity 0.5s ease !important;
+        animation: none !important;
+    }
+
+    /* Blob dekorasi */
+    body::before {
+        content: '';
+        position: fixed;
+        top: -12%;
+        right: -6%;
+        width: 460px;
+        height: 460px;
+        background: radial-gradient(circle, rgba(196, 93, 44, 0.11), transparent 70%);
+        border-radius: 50%;
+        filter: blur(80px);
+        z-index: 0;
+        pointer-events: none;
+        animation: blobFloat 22s ease-in-out infinite;
+    }
+
+    body::after {
+        content: '';
+        position: fixed;
+        bottom: -8%;
+        left: -6%;
+        width: 380px;
+        height: 380px;
+        background: radial-gradient(circle, rgba(122, 158, 126, 0.13), transparent 70%);
+        border-radius: 50%;
+        filter: blur(80px);
+        z-index: 0;
+        pointer-events: none;
+        animation: blobFloat 22s ease-in-out infinite -8s;
+    }
+
+    @keyframes blobFloat {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        25% { transform: translate(25px, -18px) scale(1.04); }
+        50% { transform: translate(-18px, 25px) scale(0.96); }
+        75% { transform: translate(12px, 12px) scale(1.02); }
+    }
+
+    /* ===== HEADER ===== */
+    header {
+        background: rgba(250, 246, 241, 0.78);
+        backdrop-filter: blur(20px) saturate(1.4);
+        -webkit-backdrop-filter: blur(20px) saturate(1.4);
+        border-bottom: 1px solid rgba(196, 93, 44, 0.1);
+        color: #2c1810;
+        padding: 18px 24px;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        animation: headerSlide 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+    }
+
+    @keyframes headerSlide {
+        from { opacity: 0; transform: translateY(-18px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    header h2 {
+        font-family: 'Playfair Display', serif;
+        font-weight: 900;
+        font-size: 1.4rem;
+        color: #2c1810;
+        letter-spacing: -0.02em;
+        margin: 0 0 10px 0;
+    }
+
+    nav a {
+        color: #5a3e2b;
+        margin: 0 6px;
+        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 500;
+        padding: 7px 16px;
+        border-radius: 999px;
+        transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        position: relative;
+    }
+
+    nav a:hover {
+        text-decoration: none;
+        color: #c45d2c;
+        background: rgba(196, 93, 44, 0.08);
+    }
+
+    /* ===== JUDUL HALAMAN ===== */
+    body > h2 {
+        font-family: 'Playfair Display', serif;
+        font-weight: 900;
+        font-size: clamp(1.6rem, 4vw, 2.4rem);
+        color: #2c1810;
+        letter-spacing: -0.03em;
+        margin-top: 40px;
+        margin-bottom: 8px;
+        position: relative;
+        z-index: 1;
+        animation: heroIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
+    }
+
+    body > h2::after {
+        content: '';
+        display: block;
+        width: 50px;
+        height: 3px;
+        background: linear-gradient(90deg, #c45d2c, #e8743a);
+        border-radius: 999px;
+        margin: 10px auto 0;
+    }
+
+    @keyframes heroIn {
+        from { opacity: 0; transform: translateY(25px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== CONTAINER ===== */
+    .container {
+        margin-top: 24px;
+        position: relative;
+        z-index: 1;
+        animation: heroIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
+    }
+
+    /* Empty state styling */
+    .container > p {
+        font-size: 1rem;
+        color: #9c8272;
+        padding: 60px 20px;
+        position: relative;
+    }
+
+    .container > p::before {
+        content: '';
+        display: block;
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 18px;
+        background: rgba(196, 93, 44, 0.06);
+        border-radius: 50%;
+        position: relative;
+    }
+
+    .container > p::after {
+        content: '🛒';
+        position: absolute;
+        top: 52px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 2rem;
+        opacity: 0.4;
+    }
+
+    /* ===== ITEM ===== */
+    .item {
+        width: 320px;
+        max-width: 90vw;
+        margin: 12px auto;
+        padding: 18px 20px;
+        border: 1px solid rgba(196, 93, 44, 0.1);
+        border-radius: 18px;
+        text-align: left;
+        background: rgba(255, 249, 245, 0.75);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 2px 12px rgba(44, 24, 16, 0.05);
+        transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        position: relative;
+        overflow: hidden;
+        animation: itemSlide 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    /* Accent bar kiri */
+    .item::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: linear-gradient(180deg, #c45d2c, #e8743a);
+        border-radius: 0 4px 4px 0;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .item:hover::before { opacity: 1; }
+
+    .item:hover {
+        transform: translateX(4px);
+        box-shadow: 0 8px 32px rgba(44, 24, 16, 0.1);
+        border-color: rgba(196, 93, 44, 0.18);
+    }
+
+    .item h4 {
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        font-size: 1rem;
+        color: #2c1810;
+        margin: 0 0 6px 0;
+        letter-spacing: -0.01em;
+        transition: color 0.3s;
+    }
+
+    .item:hover h4 { color: #c45d2c; }
+
+    .item p {
+        font-size: 0.88rem;
+        color: #9c8272;
+        margin: 0;
+        font-weight: 500;
+    }
+
+    .item p + p {
+        font-weight: 700;
+        color: #c45d2c;
+        font-size: 0.95rem;
+        margin-top: 6px;
+    }
+
+    /* Staggered entrance — bantu dengan nth-child */
+    .item:nth-child(1) { animation-delay: 0.55s; }
+    .item:nth-child(2) { animation-delay: 0.62s; }
+    .item:nth-child(3) { animation-delay: 0.69s; }
+    .item:nth-child(4) { animation-delay: 0.76s; }
+    .item:nth-child(5) { animation-delay: 0.83s; }
+    .item:nth-child(6) { animation-delay: 0.90s; }
+    .item:nth-child(7) { animation-delay: 0.97s; }
+    .item:nth-child(8) { animation-delay: 1.04s; }
+
+    @keyframes itemSlide {
+        from { opacity: 0; transform: translateY(16px) translateX(-8px); }
+        to { opacity: 1; transform: translateY(0) translateX(0); }
+    }
+
+    /* ===== TOTAL ===== */
+    .total {
+        font-family: 'Playfair Display', serif;
+        font-weight: 900;
+        font-size: 1.4rem;
+        color: #2c1810;
+        margin-top: 32px;
+        position: relative;
+        z-index: 1;
+        animation: heroIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.65s both;
+    }
+
+    /* Highlight pada kata "Total:" */
+    .total::before {
+        content: 'Total';
+        font-weight: 900;
+        color: #c45d2c;
+        background: linear-gradient(135deg, #fceee6, #fceee6);
+        padding: 2px 12px 0;
+        border-radius: 8px 8px 0 0;
+        display: inline;
+        font-size: 0.85rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        margin-right: 4px;
+    }
+
+    .total::after {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, #c45d2c, #e8743a);
+        border-radius: 999px;
+        margin: 10px auto 0;
+    }
+
+    /* ===== BUTTONS ===== */
+    button {
+        margin: 10px;
+        padding: 12px 28px;
+        border: none;
+        border-radius: 999px;
+        cursor: pointer;
+        font-family: 'DM Sans', Arial, sans-serif;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        position: relative;
+        z-index: 1;
+        animation: heroIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.75s both;
+    }
+
+    button:focus-visible {
+        outline: 2px solid #c45d2c;
+        outline-offset: 3px;
+    }
+
+    .hapus {
+        background: linear-gradient(135deg, #c0392b, #e74c3c);
+        color: white;
+        box-shadow: 0 4px 18px rgba(192, 57, 43, 0.2);
+    }
+
+    .hapus:hover {
+        transform: translateY(-2px) scale(1.04);
+        box-shadow: 0 10px 32px rgba(192, 57, 43, 0.3);
+    }
+
+    .hapus:active { transform: translateY(0) scale(0.97); }
+
+    .checkout {
+        background: linear-gradient(135deg, #7a9e7e, #96b89a);
+        color: white;
+        box-shadow: 0 4px 18px rgba(122, 158, 126, 0.25);
+    }
+
+    .checkout:hover {
+        transform: translateY(-2px) scale(1.04);
+        box-shadow: 0 10px 32px rgba(122, 158, 126, 0.35);
+    }
+
+    .checkout:active { transform: translateY(0) scale(0.97); }
+
+    /* ===== FOOTER ===== */
+    footer {
+        background: rgba(250, 246, 241, 0.82);
+        backdrop-filter: blur(20px) saturate(1.4);
+        -webkit-backdrop-filter: blur(20px) saturate(1.4);
+        border-top: 1px solid rgba(196, 93, 44, 0.1);
+        color: #9c8272;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        padding: 14px 10px;
+        font-size: 0.82rem;
+        font-weight: 500;
+        z-index: 10;
+    }
+
+    footer::before {
+        content: '';
+        position: absolute;
+        top: -16px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 240px;
+        height: 16px;
+        background: radial-gradient(ellipse, rgba(196, 93, 44, 0.05), transparent);
+        pointer-events: none;
+    }
+
+    /* ===== RESPONSIVE HP (sudah ada, tetap dipertahankan) ===== */
+    @media (max-width: 640px) {
+        header { padding: 14px 16px; }
+        header h2 { font-size: 1.2rem; }
+        nav a { padding: 6px 12px; font-size: 0.8rem; margin: 0 2px; }
+        body > h2 { font-size: 1.5rem; margin-top: 28px; }
+        .item { width: 90vw; padding: 16px; }
+        .total { font-size: 1.2rem; }
+        button { padding: 11px 22px; font-size: 0.85rem; margin: 8px 6px; }
+    }
+
+    /* ===== RESPONSIVE TABLET (641px ke atas) ===== */
+    @media (min-width: 641px) {
+        .container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            max-width: 740px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 24px;
+            margin-top: 24px;
+        }
+
+        .container > p {
+            grid-column: 1 / -1;
+            font-size: 1.05rem;
+            padding: 80px 20px;
+        }
+
+        .item {
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            padding: 20px 22px;
+        }
+
+        .item h4 { font-size: 1.05rem; }
+        .item p { font-size: 0.9rem; }
+        .item p + p { font-size: 1rem; }
+
+        .item:hover {
+            transform: translateY(-3px);
+        }
+
+        .total {
+            max-width: 740px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 24px;
+            text-align: left;
+        }
+
+        /* Fix: garis bawah total ikut rata kiri di tablet */
+        .total::after {
+            margin: 10px 0 0;
+        }
+    }
+
+    /* ===== RESPONSIVE LAPTOP / DESKTOP (1024px ke atas) ===== */
+    @media (min-width: 1024px) {
+        .container {
+            grid-template-columns: repeat(3, 1fr);
+            max-width: 1100px;
+            gap: 20px;
+            padding: 0 32px;
+        }
+
+        .container > p {
+            grid-column: 1 / -1;
+            font-size: 1.1rem;
+            padding: 100px 20px;
+        }
+
+        .item {
+            padding: 22px 24px;
+        }
+
+        .item h4 { font-size: 1.1rem; }
+
+        .item:hover {
+            transform: translateY(-4px) translateX(0);
+            box-shadow: 0 12px 40px rgba(44, 24, 16, 0.12);
+        }
+
+        .total {
+            max-width: 1100px;
+            padding: 0 32px;
+            font-size: 1.6rem;
+        }
+
+        /* Fix: garis bawah total tetap rata kiri di laptop */
+        .total::after {
+            margin: 10px 0 0;
+            width: 70px;
+        }
+
+        header {
+            padding: 20px 32px;
+        }
+
+        header h2 {
+            font-size: 1.6rem;
+        }
+
+        nav a {
+            font-size: 0.95rem;
+            padding: 8px 22px;
+            margin: 0 8px;
+        }
+
+        body > h2 {
+            font-size: 2.4rem;
+            margin-top: 48px;
+        }
+
+        button {
+            padding: 14px 36px;
+            font-size: 0.95rem;
+            margin: 12px;
+        }
+
+        footer {
+            font-size: 0.88rem;
+            padding: 16px 10px;
+        }
+    }
+
+    /* ===== RESPONSIVE DESKTOP BESAR (1440px ke atas) ===== */
+    @media (min-width: 1440px) {
+        .container {
+            max-width: 1300px;
+            gap: 24px;
+        }
+
+        .item {
+            padding: 24px 28px;
+            border-radius: 20px;
+        }
+
+        .item h4 { font-size: 1.15rem; }
+
+        .total {
+            max-width: 1300px;
+            font-size: 1.8rem;
+        }
+
+        /* Fix: garis bawah total tetap rata kiri di desktop besar */
+        .total::after {
+            margin: 10px 0 0;
+            width: 80px;
+        }
+
+        header {
+            padding: 22px 48px;
+        }
+
+        header h2 { font-size: 1.7rem; }
+
+        nav a {
+            font-size: 1rem;
+            padding: 9px 26px;
+            margin: 0 10px;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            transition-duration: 0.01ms !important;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <h2>Toko Vitanty Aulia</h2>
+        <nav>
+            <a href="index.html">Beranda</a>
+            <a href="produk.html">Produk</a>
+            <a href="kategori.html">Kategori</a>
+            <a href="keranjang.html">Keranjang</a>
+        </nav>
+</header>
+
+<h2>Keranjang Belanja 🛒</h2>
+
+<div class="container" id="listKeranjang"></div>
+
+<div class="total" id="totalHarga"></div>
+
+<button class="hapus" onclick="hapusSemua()">Hapus Semua</button>
+<button class="checkout" onclick="checkout()">Checkout</button>
+
+<footer>
+    <p>copyright by vitanty aulia</p>
+</footer>
+
+<script>
+let keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];
+let total = 0;
+let tampil = "";
+
+if (keranjang.length === 0) {
+    tampil = "<p>Keranjang masih kosong 😢</p>";
+} else {
+    keranjang.forEach((item, index) => {
+        tampil += `
+        <div class="item">
+            <h4>${item.nama}</h4>
+            <p>Harga: Rp ${item.harga}</p>
+        </div>
+        `;
+        total += item.harga;
+    });
+}
+
+document.getElementById("listKeranjang").innerHTML = tampil;
+document.getElementById("totalHarga").innerHTML = "Total: Rp " + total;
+
+function hapusSemua() {
+    localStorage.removeItem("keranjang");
+    location.reload();
+}
+
+function checkout() {
+    alert("Terima kasih sudah berbelanja 😍");
+    localStorage.removeItem("keranjang");
+    location.reload();
+}
+</script>
+
+</body>
+</html>
