@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Website Pertamaku</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        /* Header */
+        header {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+        }
+
+        header h2 {
+            margin: 0;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .btn-produk {
+    background-color: orange;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.btn-produk:hover {
+    background-color: darkorange;
+    transform: scale(1.05);
+}
+
+/* Animasi halaman */
+body {
+    opacity: 0;
+    animation: fadeIn 0.8s ease-in forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+        /* Footer */
+        footer {
+            background-color: rgba(128, 128, 128, 0.5);
+            color: black;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h2>✨Toko Dapur Aulisious ✨</h2>
+        <nav>
+            <a href="#">Beranda</a>
+            <a href="#">Produk</a>
+            <a href="#">Kategori</a>
+            <a href="#">Keranjang</a>
+        </nav>
+    </header>
+
+    <h1>Selamat Datang di Toko Online</h1>
+
+<button onclick="pindahHalaman('produk.html')" class="btn-produk">
+    Lihat Produk
+</button>
+
+    <footer>
+        <p>copyright by vitanty aulia</p>
+    </footer>
+<script>
+function pindahHalaman(url) {
+    document.body.classList.add("fade-out");
+    setTimeout(function() {
+        window.location.href = url;
+    }, 500);
+}
+</script>
+</body>
+</html>
