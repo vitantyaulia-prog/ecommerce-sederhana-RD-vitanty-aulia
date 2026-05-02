@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shop</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+        /* ===== Scrollbar ===== */
+        ::-webkit-scrollbar { width: 7px; }
+        ::-webkit-scrollbar-track { background: #faf6f1; }
+        ::-webkit-scrollbar-thumb { background: rgba(196, 93, 44, 0.18); border-radius: 999px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(196, 93, 44, 0.32); }
+
+        /* ===== Selection ===== */
+        ::selection { background: rgba(196, 93, 44, 0.16); color: #2c1810; }
+
+        body {
+            margin: 0;
+            font-family: 'DM Sans', Arial, sans-serif;
+            text-align: center;
+            background: #faf6f1;
+            color: #2c1810;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            padding-bottom: 60px;
+            opacity: 0;
+            animation: pageIn 1s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 200px;
+            background-color: #faf6f1;
+        }
+
+        @keyframes pageIn {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-out {
+            opacity: 0 !important;
+            transition: opacity 0.5s ease !important;
+            animation: none !important;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -12%;
+            right: -6%;
+            width: 480px;
+            height: 480px;
+            background: radial-gradient(circle, rgba(196, 93, 44, 0.11), transparent 70%);
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+            pointer-events: none;
+            animation: blobFloat 22s ease-in-out infinite;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -8%;
+            left: -6%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(122, 158, 126, 0.13), transparent 70%);
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+            pointer-events: none;
+            animation: blobFloat 22s ease-in-out infinite -8s;
+        }
+
+        @keyframes blobFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(25px, -18px) scale(1.04); }
+            50% { transform: translate(-18px, 25px) scale(0.96); }
+            75% { transform: translate(12px, 12px) scale(1.02); }
+        }
+
+        header {
+            background: rgba(250, 246, 241, 0.78);
+            backdrop-filter: blur(20px) saturate(1.4);
+            -webkit-backdrop-filter: blur(20px) saturate(1.4);
+            border-bottom: 1px solid rgba(196, 93, 44, 0.1);
+            color: #2c1810;
+            padding: 18px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            animation: headerSlide 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+        }
+
+        @keyframes headerSlide {
+            from { opacity: 0; transform: translateY(-18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        header h2 {
+            margin: 0 0 10px 0;
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 1.4rem;
+            letter-spacing: -0.02em;
+            color: #2c1810;
+        }
+
+        nav a {
+            color: #5a3e2b;
+            margin: 0 6px;
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            padding: 7px 16px;
+            border-radius: 999px;
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            position: relative;
+        }
+
+        nav a:hover {
+            text-decoration: none;
+            color: #c45d2c;
+            background: rgba(196, 93, 44, 0.08);
+        }
+
+        body > h2 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            color: #2c1810;
+            letter-spacing: -0.03em;
+            margin-top: 40px;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+            animation: heroIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
+        }
+
+        body > h2::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, #c45d2c, #e8743a);
+            border-radius: 999px;
+            margin: 10px auto 0;
+        }
+
+        @keyframes heroIn {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container-produk {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+            animation: heroIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
+        }
+
+        .produk {
+            border: 1px solid rgba(196, 93, 44, 0.1);
+            border-radius: 18px;
+            width: 200px;
+            padding: 0;
+            box-shadow: 0 2px 5px rgba(44, 24, 16, 0.05);
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            background: rgba(255, 249, 245, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .produk:nth-child(1) { animation: cardPop 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.55s both; }
+        .produk:nth-child(2) { animation: cardPop 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.65s both; }
+        .produk:nth-child(3) { animation: cardPop 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.75s both; }
+        .produk:nth-child(4) { animation: cardPop 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.85s both; }
+
+        @keyframes cardPop {
+            from { opacity: 0; transform: translateY(25px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .produk::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #c45d2c, transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+            z-index: 3;
+        }
+
+        .produk:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 16px 48px rgba(44, 24, 16, 0.12);
+            border-color: rgba(196, 93, 44, 0.2);
+        }
+
+        .produk:hover::before { opacity: 1; }
+
+        .produk img {
+            width: 100%;
+            border-radius: 18px 18px 0 0;
+            display: block;
+            transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            aspect-ratio: 1;
+            object-fit: cover;
+            background: #f5ede3;
+        }
+
+        .produk:hover img {
+            transform: scale(1.06);
+        }
+
+        .produk h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #2c1810;
+            margin: 14px 14px 4px 14px;
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: color 0.3s;
+        }
+
+        .produk:hover h3 { color: #c45d2c; }
+
+        .produk .deskripsi {
+            font-size: 0.76rem;
+            color: #9c8272;
+            line-height: 1.55;
+            margin: 0 14px 10px 14px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .produk p:not(.deskripsi):not(:has(+ button)) {
+            font-weight: 700;
+            color: #c45d2c;
+            font-size: 1rem;
+            margin: 0 14px 12px 14px;
+        }
+
+        .produk button {
+            background: linear-gradient(135deg, #c45d2c, #e8743a);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-family: 'DM Sans', Arial, sans-serif;
+            font-size: 0.82rem;
+            font-weight: 600;
+            width: calc(100% - 28px);
+            margin: 0 14px 14px 14px;
+            display: block;
+            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+            box-shadow: 0 4px 16px rgba(196, 93, 44, 0.15);
+            position: relative;
+            z-index: 1;
+        }
+
+        .produk button:hover {
+            background: linear-gradient(135deg, #e8743a, #d4683a);
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 8px 28px rgba(196, 93, 44, 0.28);
+        }
+
+        .produk button:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        footer {
+            background: rgba(250, 246, 241, 0.82);
+            backdrop-filter: blur(20px) saturate(1.4);
+            -webkit-backdrop-filter: blur(20px) saturate(1.4);
+            border-top: 1px solid rgba(196, 93, 44, 0.1);
+            color: #9c8272;
+            text-align: center;
+            padding: 14px 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 0.82rem;
+            font-weight: 500;
+            z-index: 10;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 240px;
+            height: 16px;
+            background: radial-gradient(ellipse, rgba(196, 93, 44, 0.05), transparent);
+            pointer-events: none;
+        }
+
+        @media (max-width: 920px) {
+            .container-produk { gap: 16px; }
+            .produk { width: 180px; }
+        }
+
+        @media (max-width: 640px) {
+            header { padding: 14px 16px; }
+            header h2 { font-size: 1.2rem; }
+            nav a { padding: 6px 12px; font-size: 0.8rem; margin: 0 2px; }
+            body > h2 { font-size: 1.5rem; margin-top: 28px; }
+            .container-produk { gap: 12px; padding: 0 14px; }
+            .produk { width: calc(50% - 14px); min-width: 155px; }
+        }
+
+        @media (max-width: 400px) {
+            .produk { width: calc(50% - 8px); min-width: 140px; }
+            .produk h3 { font-size: 0.85rem; }
+            .produk .deskripsi { font-size: 0.72rem; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        @media (max-width: 360px) {
+            header h2 { font-size: 1rem; margin-bottom: 5px; }
+            nav a { font-size: 0.68rem; padding: 4px 7px; margin: 0 1px; }
+            body > h2 { font-size: 1.25rem; margin-top: 20px; }
+            .container-produk { gap: 8px; padding: 0 8px; margin-top: 18px; }
+            .produk { width: calc(50% - 6px); min-width: 125px; border-radius: 14px; }
+            .produk img { border-radius: 14px 14px 0 0; }
+            .produk h3 { font-size: 0.78rem; margin: 10px 10px 3px; }
+            .produk .deskripsi { font-size: 0.66rem; margin: 0 10px 7px; }
+            .produk p:not(.deskripsi):not(:has(+ button)) { font-size: 0.88rem; margin: 0 10px 8px; }
+            .produk button { font-size: 0.72rem; padding: 9px 10px; min-height: 38px; }
+            footer { font-size: 0.68rem; padding: 10px 6px; }
+        }
+
+        @media (min-width: 361px) and (max-width: 640px) {
+            .produk button { min-height: 42px; }
+        }
+
+        @media (min-width: 641px) and (max-width: 920px) {
+            .container-produk { padding: 0 24px; }
+            .produk { width: calc(50% - 14px); }
+            .produk button { min-height: 44px; }
+        }
+
+        @media (min-width: 921px) and (max-width: 1200px) {
+            .container-produk { gap: 22px; padding: 0 30px; }
+            .produk { width: 210px; }
+            .produk button { min-height: 44px; }
+        }
+
+        @media (min-width: 1201px) {
+            header { padding: 20px 40px; }
+            header h2 { font-size: 1.5rem; margin-bottom: 12px; }
+            nav a { font-size: 0.95rem; padding: 8px 22px; margin: 0 10px; }
+            body > h2 { margin-top: 50px; }
+            .container-produk {
+                gap: 26px;
+                padding: 0 40px;
+                max-width: 1060px;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 40px;
+            }
+            .produk { width: 230px; }
+            .produk h3 { font-size: 1rem; }
+            .produk .deskripsi { font-size: 0.8rem; }
+            .produk p:not(.deskripsi):not(:has(+ button)) { font-size: 1.08rem; }
+            .produk button { font-size: 0.88rem; padding: 12px 20px; min-height: 46px; }
+        }
+
+        @media (min-width: 1440px) {
+            .container-produk { max-width: 1200px; gap: 30px; padding: 0 50px; }
+            .produk { width: 260px; }
+            .produk .deskripsi { -webkit-line-clamp: 3; }
+        }
+
+        /* ====================================================
+           TAMBAHAN: STYLES BAGIAN KONTAK
+           ==================================================== */
+        .kontak-section {
+            position: relative;
+            z-index: 1;
+            margin-top: 44px;
+            padding: 0 20px 30px;
+            opacity: 0;
+            animation: heroIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.95s both;
+        }
+
+        .kontak-label {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: clamp(0.92rem, 2.2vw, 1.12rem);
+            color: #5a3e2b;
+            margin-bottom: 18px;
+            letter-spacing: -0.01em;
+        }
+
+        .kontak-label::after {
+            content: '';
+            display: block;
+            width: 30px;
+            height: 2px;
+            background: linear-gradient(90deg, #c45d2c, #e8743a);
+            border-radius: 999px;
+            margin: 9px auto 0;
+        }
+
+        .kontak-list {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 14px;
+            flex-wrap: wrap;
+            max-width: 540px;
+            margin: 0 auto;
+        }
+
+        .kontak-item {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(12px) saturate(1.3);
+            -webkit-backdrop-filter: blur(12px) saturate(1.3);
+            border: 1px solid rgba(196, 93, 44, 0.08);
+            border-radius: 14px;
+            padding: 11px 16px;
+            text-decoration: none;
+            color: #5a3e2b;
+            font-size: clamp(0.76rem, 1.7vw, 0.86rem);
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            min-width: 0;
+        }
+
+        .kontak-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 26px rgba(196, 93, 44, 0.11);
+            border-color: rgba(196, 93, 44, 0.2);
+            color: #c45d2c;
+            background: rgba(255, 255, 255, 0.72);
+        }
+
+        .kontak-item:focus-visible {
+            outline: 2px solid #c45d2c;
+            outline-offset: 2px;
+        }
+
+        .kontak-icon {
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .kontak-icon svg {
+            width: 17px;
+            height: 17px;
+        }
+
+        .kontak-item.wa .kontak-icon {
+            background: rgba(37, 211, 102, 0.1);
+        }
+        .kontak-item.wa .kontak-icon svg { stroke: #25D366; }
+
+        .kontak-item.gmail .kontak-icon {
+            background: rgba(234, 67, 53, 0.07);
+        }
+        .kontak-item.gmail .kontak-icon svg { stroke: #EA4335; }
+
+        .kontak-item.ig .kontak-icon {
+            background: rgba(225, 48, 108, 0.07);
+        }
+        .kontak-item.ig .kontak-icon svg { stroke: #E1306C; }
+
+        .kontak-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1px;
+            min-width: 0;
+        }
+
+        .kontak-text span:first-child {
+            font-size: 0.64rem;
+            color: #9c8272;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .kontak-text span:last-child {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 125px;
+        }
+
+        .kontak-item:hover .kontak-text span:last-child {
+            color: #c45d2c;
+        }
+
+        @media (max-width: 640px) {
+            .kontak-section { margin-top: 32px; padding: 0 14px 24px; }
+
+            .kontak-list {
+                flex-direction: column;
+                align-items: center;
+                gap: 9px;
+            }
+
+            .kontak-item {
+                width: 100%;
+                max-width: 270px;
+                justify-content: center;
+                padding: 10px 14px;
+            }
+
+            .kontak-text {
+                align-items: center;
+            }
+
+            .kontak-text span:last-child {
+                max-width: 155px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .kontak-section { padding: 0 8px 20px; margin-top: 24px; }
+            .kontak-item { max-width: 240px; padding: 9px 12px; font-size: 0.72rem; }
+            .kontak-icon { width: 28px; height: 28px; border-radius: 7px; }
+            .kontak-icon svg { width: 15px; height: 15px; }
+            .kontak-text span:first-child { font-size: 0.58rem; }
+            .kontak-text span:last-child { max-width: 130px; font-size: 0.68rem; }
+        }
+
+        @media (min-width: 1201px) {
+            .kontak-section { margin-top: 52px; }
+            .kontak-list { gap: 18px; }
+            .kontak-item { padding: 13px 20px; }
+            .kontak-text span:last-child { max-width: 140px; }
+        }
+    </style>
+</head>
+<body>
+        <!-- Header -->
+    <header>
+        <h2>✨Dapur Aulisious✨</h2>
+        <nav>
+            <a href="index.html">Beranda</a>
+            <a href="produk.html">Produk</a>
+            <a href="kategori.html">Kategori</a>
+            <a href="keranjang.html">Keranjang</a>
+        </nav>
+    </header>
+
+<h2>Produk Kami</h2>
+
+    <div class="container-produk">
+
+        <div class="produk">
+    <img src="gambar/dimsum-goreng-keju.jpeg">
+    <h3>Dimsum Goreng Keju</h3>
+    <p class="deskripsi">Kulit crispy, isian keju leleh gurih yang bikin ketagihan.</p>
+    <p>Rp 15.000</p>
+    <button onclick="tambahKeranjang('Dimsum Goreng Keju', 15000)">
+    + Keranjang
+</button>
+</div>
+
+<div class="produk">
+    <img src="gambar/dimsum-mentai.jpeg">
+    <h3>Dimsum Mentai</h3>
+    <p class="deskripsi">Saus mentai creamy dibakar tipis smoky, umami, nagih.</p>
+    <p>Rp 25.000</p>
+    <button onclick="tambahKeranjang('Dimsum Mentai', 25000)">
+    + Keranjang
+</button>
+</div>
+
+<div class="produk">
+    <img src="gambar/dimsum-original.jpeg">
+    <h3>Dimsum Original</h3>
+    <p class="deskripsi">Kukus lembut, isian daging pilihan dengan rasa autentik.</p>
+    <p>Rp 12.000</p>
+    <button onclick="tambahKeranjang('Dimsum Original', 12000)">
+    + Keranjang
+</button>
+</div>
+
+<div class="produk">
+    <img src="gambar\Tahu Bakso Toping.jpeg">
+    <h3>Tahu Bakso Toping</h3>
+    <p class="deskripsi">Tahu lembut isi bakso kenyal, lengkap dengan topping pilihan.</p>
+    <p>Rp 15.000</p>
+    <button onclick="tambahKeranjang('Tahu Bakso Toping', 10000)">
+    + Keranjang
+</button>
+</div>
+    
+    </div>
+
+    <!-- ===== TAMBAHAN: BAGIAN KONTAK ===== -->
+    <section class="kontak-section" aria-label="Kontak kami">
+        <p class="kontak-label">Hubungi Kami</p>
+        <div class="kontak-list">
+
+            <!-- WhatsApp -->
+            <a href="https://wa.me/62895412066120" target="_blank" rel="noopener noreferrer" class="kontak-item wa" aria-label="Chat WhatsApp">
+                <span class="kontak-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                    </svg>
+                </span>
+                <span class="kontak-text">
+                    <span>WhatsApp</span>
+                    <span>0895-4120-66120</span>
+                </span>
+            </a>
+
+            <!-- Gmail -->
+            <a href="mailto:vitantyauia@gmail.com" class="kontak-item gmail" aria-label="Kirim email">
+                <span class="kontak-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="4" width="20" height="16" rx="2"/>
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                    </svg>
+                </span>
+                <span class="kontak-text">
+                    <span>Email</span>
+                    <span>vitantyauia@gmail.com</span>
+                </span>
+            </a>
+
+            <!-- Instagram -->
+            <a href="https://instagram.com/tntyaull_" target="_blank" rel="noopener noreferrer" class="kontak-item ig" aria-label="Kunjungi Instagram">
+                <span class="kontak-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="5"/>
+                        <circle cx="12" cy="12" r="5"/>
+                        <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
+                    </svg>
+                </span>
+                <span class="kontak-text">
+                    <span>Instagram</span>
+                    <span>@tntyaull_</span>
+                </span>
+            </a>
+
+        </div>
+    </section>
+    <!-- ===== AKHIR TAMBAHAN KONTAK ===== -->
+
+ <footer>
+ <p>copyright by vitanty aulia</p>
+    </footer>
+<script>
+    function pindahHalaman(url) {
+    document.body.classList.add("fade-out");
+    setTimeout(function() {
+        window.location.href = url;
+    }, 500);
+}
+function tambahKeranjang(nama, harga) {
+    let keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];
+
+    keranjang.push({ nama: nama, harga: harga });
+
+    localStorage.setItem("keranjang", JSON.stringify(keranjang));
+
+    alert(nama + " ditambahkan ke keranjang 🛒");
+}
+</script>
+</body>
+</html>
