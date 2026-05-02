@@ -561,6 +561,327 @@
             transition-duration: 0.01ms !important;
         }
     }
+
+    /* ====================================================
+       TAMBAHAN: STYLES BAGIAN KONTAK
+       ==================================================== */
+    .kontak-section {
+        position: relative;
+        z-index: 1;
+        margin-top: 36px;
+        padding: 0 20px 28px;
+        opacity: 0;
+        animation: heroIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.85s both;
+    }
+
+    .kontak-label {
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        font-size: clamp(0.9rem, 2.2vw, 1.1rem);
+        color: #5a3e2b;
+        margin-bottom: 16px;
+        letter-spacing: -0.01em;
+    }
+
+    .kontak-label::after {
+        content: '';
+        display: block;
+        width: 28px;
+        height: 2px;
+        background: linear-gradient(90deg, #c45d2c, #e8743a);
+        border-radius: 999px;
+        margin: 8px auto 0;
+    }
+
+    .kontak-list {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 12px;
+        flex-wrap: wrap;
+        max-width: 520px;
+        margin: 0 auto;
+    }
+
+    .kontak-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(12px) saturate(1.3);
+        -webkit-backdrop-filter: blur(12px) saturate(1.3);
+        border: 1px solid rgba(196, 93, 44, 0.08);
+        border-radius: 13px;
+        padding: 10px 15px;
+        text-decoration: none;
+        color: #5a3e2b;
+        font-size: clamp(0.74rem, 1.6vw, 0.84rem);
+        font-weight: 500;
+        transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        min-width: 0;
+    }
+
+    .kontak-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 24px rgba(196, 93, 44, 0.1);
+        border-color: rgba(196, 93, 44, 0.2);
+        color: #c45d2c;
+        background: rgba(255, 255, 255, 0.72);
+    }
+
+    .kontak-item:focus-visible {
+        outline: 2px solid #c45d2c;
+        outline-offset: 2px;
+    }
+
+    .kontak-icon {
+        flex-shrink: 0;
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .kontak-icon svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .kontak-item.wa .kontak-icon {
+        background: rgba(37, 211, 102, 0.1);
+    }
+    .kontak-item.wa .kontak-icon svg { stroke: #25D366; }
+
+    .kontak-item.gmail .kontak-icon {
+        background: rgba(234, 67, 53, 0.07);
+    }
+    .kontak-item.gmail .kontak-icon svg { stroke: #EA4335; }
+
+    .kontak-item.ig .kontak-icon {
+        background: rgba(225, 48, 108, 0.07);
+    }
+    .kontak-item.ig .kontak-icon svg { stroke: #E1306C; }
+
+    .kontak-text {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1px;
+        min-width: 0;
+    }
+
+    .kontak-text span:first-child {
+        font-size: 0.6rem;
+        color: #9c8272;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+    }
+
+    .kontak-text span:last-child {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 120px;
+    }
+
+    .kontak-item:hover .kontak-text span:last-child {
+        color: #c45d2c;
+    }
+
+    @media (max-width: 640px) {
+        .kontak-section { margin-top: 28px; padding: 0 14px 22px; }
+
+        .kontak-list {
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .kontak-item {
+            width: 100%;
+            max-width: 260px;
+            justify-content: center;
+            padding: 9px 13px;
+        }
+
+        .kontak-text {
+            align-items: center;
+        }
+
+        .kontak-text span:last-child {
+            max-width: 150px;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .kontak-section { margin-top: 44px; }
+        .kontak-list { gap: 16px; }
+        .kontak-item { padding: 12px 18px; }
+        .kontak-text span:last-child { max-width: 135px; }
+    }
+
+    /* ====================================================
+       TAMBAHAN: TOAST NOTIFIKASI
+       ==================================================== */
+    .toast {
+        position: fixed;
+        bottom: 70px;
+        left: 50%;
+        transform: translateX(-50%) translateY(20px);
+        background: rgba(44, 24, 16, 0.88);
+        color: #faf6f1;
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-size: 0.84rem;
+        font-weight: 600;
+        font-family: 'DM Sans', Arial, sans-serif;
+        z-index: 20;
+        pointer-events: none;
+        opacity: 0;
+        transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        box-shadow: 0 8px 32px rgba(44, 24, 16, 0.25);
+        white-space: nowrap;
+    }
+
+    .toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    /* ====================================================
+       TAMBAHAN: MODAL KONFIRMASI CHECKOUT
+       ==================================================== */
+    .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(44, 24, 16, 0.3);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        z-index: 15;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.35s ease;
+    }
+
+    .modal-overlay.show {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .modal-box {
+        background: rgba(255, 249, 245, 0.92);
+        backdrop-filter: blur(20px) saturate(1.4);
+        -webkit-backdrop-filter: blur(20px) saturate(1.4);
+        border: 1px solid rgba(196, 93, 44, 0.12);
+        border-radius: 22px;
+        padding: 32px 28px 26px;
+        max-width: 380px;
+        width: 100%;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(44, 24, 16, 0.18);
+        transform: scale(0.92) translateY(12px);
+        transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .modal-overlay.show .modal-box {
+        transform: scale(1) translateY(0);
+    }
+
+    .modal-box h3 {
+        font-family: 'Playfair Display', serif;
+        font-weight: 900;
+        font-size: 1.2rem;
+        color: #2c1810;
+        margin: 0 0 6px;
+        letter-spacing: -0.02em;
+    }
+
+    .modal-box .modal-sub {
+        font-size: 0.82rem;
+        color: #9c8272;
+        margin: 0 0 18px;
+        line-height: 1.5;
+    }
+
+    .modal-ringkasan {
+        background: rgba(196, 93, 44, 0.04);
+        border: 1px solid rgba(196, 93, 44, 0.08);
+        border-radius: 14px;
+        padding: 14px 16px;
+        margin-bottom: 20px;
+        text-align: left;
+        max-height: 180px;
+        overflow-y: auto;
+    }
+
+    .modal-ringkasan p {
+        font-size: 0.8rem;
+        color: #5a3e2b;
+        margin: 0 0 4px;
+        font-weight: 500;
+        line-height: 1.5;
+    }
+
+    .modal-ringkasan p:last-child {
+        margin: 0;
+        padding-top: 8px;
+        border-top: 1px solid rgba(196, 93, 44, 0.1);
+        font-weight: 700;
+        color: #c45d2c;
+        font-size: 0.9rem;
+        margin-top: 6px;
+    }
+
+    .modal-buttons {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .modal-buttons button {
+        margin: 0;
+        padding: 11px 22px;
+        font-size: 0.84rem;
+        animation: none;
+        opacity: 1;
+    }
+
+    .modal-btn-batal {
+        background: rgba(156, 130, 114, 0.12);
+        color: #5a3e2b;
+        box-shadow: none;
+    }
+
+    .modal-btn-batal:hover {
+        background: rgba(156, 130, 114, 0.2);
+        transform: translateY(-2px);
+    }
+
+    .modal-btn-kirim {
+        background: linear-gradient(135deg, #25D366, #128C7E);
+        color: white;
+        box-shadow: 0 4px 16px rgba(37, 211, 102, 0.25);
+    }
+
+    .modal-btn-kirim:hover {
+        transform: translateY(-2px) scale(1.04);
+        box-shadow: 0 10px 28px rgba(37, 211, 102, 0.35);
+    }
+
+    @media (max-width: 640px) {
+        .modal-box { padding: 26px 20px 22px; border-radius: 18px; }
+        .modal-box h3 { font-size: 1.05rem; }
+        .modal-buttons button { padding: 10px 18px; font-size: 0.8rem; }
+    }
 </style>
 </head>
 
@@ -584,6 +905,74 @@
 
 <button class="hapus" onclick="hapusSemua()">Hapus Semua</button>
 <button class="checkout" onclick="checkout()">Checkout</button>
+
+<!-- ===== TAMBAHAN: BAGIAN KONTAK ===== -->
+<section class="kontak-section" aria-label="Kontak kami">
+    <p class="kontak-label">Hubungi Kami</p>
+    <div class="kontak-list">
+
+        <!-- WhatsApp -->
+        <a href="https://wa.me/62895412066120" target="_blank" rel="noopener noreferrer" class="kontak-item wa" aria-label="Chat WhatsApp">
+            <span class="kontak-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                </svg>
+            </span>
+            <span class="kontak-text">
+                <span>WhatsApp</span>
+                <span>0895-4120-66120</span>
+            </span>
+        </a>
+
+        <!-- Gmail -->
+        <a href="mailto:vitantyauia@gmail.com" class="kontak-item gmail" aria-label="Kirim email">
+            <span class="kontak-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="4" width="20" height="16" rx="2"/>
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                </svg>
+            </span>
+            <span class="kontak-text">
+                <span>Email</span>
+                <span>vitantyauia@gmail.com</span>
+            </span>
+        </a>
+
+        <!-- Instagram -->
+        <a href="https://instagram.com/tntyaull_" target="_blank" rel="noopener noreferrer" class="kontak-item ig" aria-label="Kunjungi Instagram">
+            <span class="kontak-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5"/>
+                    <circle cx="12" cy="12" r="5"/>
+                    <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
+                </svg>
+            </span>
+            <span class="kontak-text">
+                <span>Instagram</span>
+                <span>@tntyaull_</span>
+            </span>
+        </a>
+
+    </div>
+</section>
+<!-- ===== AKHIR TAMBAHAN KONTAK ===== -->
+
+<!-- ===== TAMBAHAN: MODAL CHECKOUT ===== -->
+<div class="modal-overlay" id="modalCheckout">
+    <div class="modal-box">
+        <h3>Konfirmasi Pesanan</h3>
+        <p class="modal-sub">Pesananmu akan dikirim lewat WhatsApp</p>
+        <div class="modal-ringkasan" id="modalRingkasan"></div>
+        <div class="modal-buttons">
+            <button class="modal-btn-batal" onclick="tutupModal()">Batal</button>
+            <button class="modal-btn-kirim" onclick="kirimWA()">Kirim via WhatsApp</button>
+        </div>
+    </div>
+</div>
+<!-- ===== AKHIR TAMBAHAN MODAL ===== -->
+
+<!-- ===== TAMBAHAN: TOAST ===== -->
+<div class="toast" id="toast"></div>
 
 <footer>
     <p>copyright by vitanty aulia</p>
@@ -616,11 +1005,67 @@ function hapusSemua() {
     location.reload();
 }
 
-function checkout() {
-    alert("Terima kasih sudah berbelanja 😍");
-    localStorage.removeItem("keranjang");
-    location.reload();
+function tampilToast(pesan) {
+    let toast = document.getElementById("toast");
+    toast.textContent = pesan;
+    toast.classList.add("show");
+    setTimeout(function() {
+        toast.classList.remove("show");
+    }, 2200);
 }
+
+function checkout() {
+    if (keranjang.length === 0) {
+        tampilToast("Keranjang masih kosong 😢");
+        return;
+    }
+
+    /* Bangun ringkasan pesanan untuk ditampilkan di modal */
+    let ringkasan = "";
+    keranjang.forEach(function(item) {
+        ringkasan += "<p>" + item.nama + " — Rp " + item.harga.toLocaleString("id-ID") + "</p>";
+    });
+    ringkasan += "<p>Total: Rp " + total.toLocaleString("id-ID") + "</p>";
+
+    document.getElementById("modalRingkasan").innerHTML = ringkasan;
+    document.getElementById("modalCheckout").classList.add("show");
+}
+
+function tutupModal() {
+    document.getElementById("modalCheckout").classList.remove("show");
+}
+
+function kirimWA() {
+    /* Bangun pesan yang rapi untuk WhatsApp */
+    let pesan = "Halo kak, saya mau pesan:\n\n";
+    keranjang.forEach(function(item, i) {
+        pesan += (i + 1) + ". " + item.nama + " — Rp " + item.harga.toLocaleString("id-ID") + "\n";
+    });
+    pesan += "\nTotal: Rp " + total.toLocaleString("id-ID");
+    pesan += "\n\nTerima kasih 🙏";
+
+    /* Encode & buka WhatsApp */
+    let waUrl = "https://wa.me/62895412066120?text=" + encodeURIComponent(pesan);
+
+    /* Hapus keranjang setelah pesan dikirim */
+    localStorage.removeItem("keranjang");
+
+    /* Tutup modal lalu redirect ke WA */
+    document.getElementById("modalCheckout").classList.remove("show");
+    tampilToast("Pesanan dikirim via WhatsApp ✅");
+
+    setTimeout(function() {
+        window.open(waUrl, "_blank");
+        location.reload();
+    }, 800);
+}
+
+/* Tutup modal kalau klik area gelap di luar kotak */
+document.getElementById("modalCheckout").addEventListener("click", function(e) {
+    if (e.target === this) {
+        tutupModal();
+    }
+});
 </script>
 
 </body>
