@@ -1,4 +1,4 @@
-# ecommerce-sederhana-RD-vitanty-aulia
+Final Project RD Vitanty Aulia
 # 📖 Ikhtisar Bisnis — Dapur Aulicious ✨
 
 > Dokumen ini merangkum profil bisnis, strategi, dan rencana pengembangan platform e-commerce **Dapur Aulicious**, sebagaimana diimplementasikan pada situs: [dapur-aulicious](https://vitantyaulia-prog.github.io/ecommerce-sederhana-RD-vitanty-aulia/)
